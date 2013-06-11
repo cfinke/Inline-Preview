@@ -7,7 +7,7 @@ Description: Adds a post preview next to the editor instead of in a new tab.
 Version: 1.0
 Author: Christopher Finke
 Author URI: http://www.chrisfinke.com/
-License: GPL2
+License: GPLv2
 */
 
 function inline_preview_enqueue( $hook ) {
