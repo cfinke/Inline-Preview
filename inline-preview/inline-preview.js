@@ -19,8 +19,13 @@ jQuery( function ( $ ) {
 			var editorContainer = $( '#wpwrap' );
 			var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview"></iframe></div>' ).css( 'width', previewWidthPx ).css( 'left', windowWidth );
 			
-			if ( $( '#post-body' ).hasClass( 'columns-2' ) )
-				$( '#post-body' ).removeClass( 'columns-2' ).addClass( 'columns-1' ).data( 'inline-preview-modified', true );
+			if ( $( '#post-body' ).hasClass( 'columns-2' ) ) {
+				var postBodyClass = 'columns-2';
+				$( '#post-body' ).removeClass( 'columns-2' ).addClass( 'columns-1' );
+			}
+			else {
+				var postBodyClass = 'columns-1';
+			}
 
 			editorContainer
 				.before( previewContainer )
