@@ -1,47 +1,14 @@
 body.inline-preview #wpwrap {
-	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
-	-webkit-animation-iteration-count: 1;
-	animation-iteration-count: 1;
-	-webkit-animation-name: inline-preview-slide-editor;
-	animation-name: inline-preview-slide-editor;
 	float: left;
-	width: 60%;
-}
-
-@-webkit-keyframes inline-preview-slide-editor {
-	from { width: 100%; }
-	to { width: 60%; }
-}
-
-@keyframes inline-preview-slide-editor {
-	from { width: 100%; }
-	to { width: 60%; }
 }
 
 #inline-preview-container {
-	-webkit-animation-iteration-count: 1;
-	animation-iteration-count: 1;
-	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
-	-webkit-animation-name: inline-preview-slide-frame;
-	animation-name: inline-preview-slide-frame;
 	height: 100%;
+	width: 0;
 	position: fixed;
 		right: 0;
 		top: 0;
 	text-align: center;	
-	width: 40%;
-}
-
-@-webkit-keyframes inline-preview-slide-frame {
-	from { width: 0%; }
-	to { width: 40%; }
-}
-
-@keyframes inline-preview-slide-frame {
-	from { width: 0%; }
-	to { width: 40%; }
 }
 
 #inline-preview-container iframe {
@@ -57,4 +24,24 @@ body.inline-preview #wpwrap {
 	-ms-transform-origin: top left;
 	transform-origin: top left;
 	width: 133%;
+}
+
+#inline-preview-close {
+	position: absolute;
+	top: 40px;
+	right: 40px;
+	width: 40px;
+	height: 40px;
+	background-color: #000;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 25px;
+	line-height: 45px;
+	opacity: 0.3;
+}
+
+#inline-preview-close:hover {
+	opacity: 0.6;
 }
