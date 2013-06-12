@@ -1,5 +1,6 @@
 body.inline-preview #wpwrap {
-	float: left;
+	width: auto;
+	padding-right: 0;
 }
 
 #inline-preview-container {
@@ -40,6 +41,7 @@ body.inline-preview #wpwrap {
 	font-size: 25px;
 	line-height: 45px;
 	opacity: 0.3;
+	z-index: 99999;
 }
 
 #inline-preview-close:hover {
