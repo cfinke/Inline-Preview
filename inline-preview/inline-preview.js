@@ -1,6 +1,26 @@
 jQuery( function ( $ ) {
-	var animationDuration = 500;
-
+	var animationDuration = 500,
+		autoPreviewTimer = null,
+		livePreviewInterval = 10000;
+	
+	function livePreviewReload() {
+		var previewFrame = $( '#inline-preview-iframe' ),
+			previewFrameWindow = $( previewFrame.get(0).contentWindow );
+		
+		var iframeScrollLocation = previewFrameWindow.scrollTop();
+		
+		$( '#post-preview' ).click();
+		
+		previewFrame.on( 'load.inline-preview', function () {
+			$( this ).off( 'load.inline-preview' );
+			
+			previewFrameWindow.scrollTop( iframeScrollLocation );
+			
+			clearTimeout( autoPreviewTimer );
+			autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
+		} );
+	}
+	
 	$( '#post-preview' ).on( 'click', function () {
 		if ( $( '#inline-preview-container' ).length > 0 )
 			return;
@@ -19,7 +39,7 @@ jQuery( function ( $ ) {
 		$( 'body' ).addClass( 'inline-preview' );
 		
 		var editorContainer = $( '#wpwrap' );
-		var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview"></iframe></div>' ).css( 'width', previewWidthPx ).css( 'left', windowWidth );
+		var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview" id="inline-preview-iframe""></iframe></div>' ).css( 'width', previewWidthPx ).css( 'left', windowWidth );
 		
 		if ( $( '#post-body' ).hasClass( 'columns-2' ) ) {
 			var postBodyClass = 'columns-2';
@@ -62,6 +82,8 @@ jQuery( function ( $ ) {
 										{ 'padding-right' : '0' },
 										{ duration : animationDuration, queue : false }
 									);
+									
+									clearTimeout( autoPreviewTimer );
 								} )
 						)
 						.css( 'z-index', '1000' );
@@ -84,5 +106,7 @@ jQuery( function ( $ ) {
 				previewContainer.css( 'z-index', '1000' );
 			}
 		} );
+		
+		autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
 	} );
 } );
