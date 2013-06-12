@@ -3,7 +3,7 @@
 Plugin Name: Inline Preview
 Plugin URI: http://www.chrisfinke.com/wordpress/plugins/inline-preview
 Description: Adds a post preview next to the editor instead of in a new tab.
-Version: 1.0
+Version: 1.1
 Author: Christopher Finke
 Author URI: http://www.chrisfinke.com/
 */
