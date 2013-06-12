@@ -1,4 +1,6 @@
 jQuery( function ( $ ) {
+	var animationDuration = 500;
+
 	$( '#post-preview' ).on( 'click', function () {
 		if ( $( '#inline-preview-container' ).length == 0 ) {
 			var windowWidth = $( document ).width();
@@ -24,13 +26,13 @@ jQuery( function ( $ ) {
 				.before( previewContainer )
 				.animate(
 					{ 'padding-right' : previewWidthPx },
-					{ duration : 1000, queue : false }
+					{ duration : animationDuration, queue : false }
 				);
 			
 			previewContainer
 				.animate(
 					{ 'left' : editorWidthPx },
-					{ duration : 1000, queue : false, complete : function () {
+					{ duration : animationDuration, queue : false, complete : function () {
 						previewContainer
 							.append(
 								$( '<a id="inline-preview-close">X</a>' )
@@ -42,9 +44,8 @@ jQuery( function ( $ ) {
 										previewContainer
 											.animate(
 												{ 'left' : $( window ).width() },
-												{ duration : 1000, queue : false, complete : function () {
-													if ( $( '#post-body' ).data( 'inline-preview-modified' ) )
-														$( '#post-body' ).removeClass( 'columns-1' ).addClass( 'columns-2' ).data( 'inline-preview-columns', null );
+												{ duration : animationDuration, queue : false, complete : function () {
+													$( '#post-body' ).removeClass( 'columns-1' ).addClass( postBodyClass );
 
 													previewContainer.remove();
 													$( 'body' ).removeClass( 'inline-preview' );
@@ -52,7 +53,7 @@ jQuery( function ( $ ) {
 											);
 										editorContainer.animate(
 											{ 'padding-right' : '0' },
-											{ duration : 1000, queue : false }
+											{ duration : animationDuration, queue : false }
 										);
 									} )
 							)
