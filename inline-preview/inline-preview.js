@@ -107,6 +107,6 @@ jQuery( function ( $ ) {
 			}
 		} );
 		
-		autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
+		// autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
 	} );
 } );
