@@ -1,21 +1,30 @@
 jQuery( function ( $ ) {
 	var animationDuration = 500,
 		autoPreviewTimer = null,
-		livePreviewInterval = 10000;
+		livePreviewInterval = 5000;
 	
 	function livePreviewReload() {
-		var previewFrame = $( '#inline-preview-iframe' ),
-			previewFrameWindow = $( previewFrame.get(0).contentWindow );
-		
-		var iframeScrollLocation = previewFrameWindow.scrollTop();
+		var hiddenFrame = $( '#inline-preview-hidden-iframe' );
 		
 		$( '#post-preview' ).click();
 		
-		previewFrame.on( 'load.inline-preview', function () {
+		// Post to the hidden frame.
+		
+		hiddenFrame.on( 'load.inline-preview', function () {
 			$( this ).off( 'load.inline-preview' );
 			
-			previewFrameWindow.scrollTop( iframeScrollLocation );
+			var visibleFrame = $( '#inline-preview-iframe' );
+			var visibleFrameWindow = $( visibleFrame.get(0).contentWindow );
+			var iframeScrollLocation = visibleFrameWindow.scrollTop();
 			
+			try {
+				visibleFrame.contents().find( 'body' ).html( hiddenFrame.contents().find( 'body' ).html() );
+			} catch ( e ) {
+				// Not 100% sure why this errors, but probably due to JS re-execution when the body contents change.
+				// console.log(e);
+			}
+			
+			visibleFrameWindow.scrollTop( iframeScrollLocation );
 			clearTimeout( autoPreviewTimer );
 			autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
 		} );
@@ -107,6 +116,11 @@ jQuery( function ( $ ) {
 			}
 		} );
 		
-		// autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
+		$( '#inline-preview-iframe' ).on( 'load.inline-preview', function () {
+			$( this ).unbind( 'load.inline-preview' ).removeAttr( 'name' );
+			$( '#inline-preview-container' ).append( $( '<iframe name="wp-preview" id="inline-preview-hidden-iframe"></iframe>' ) );
+		} );
+		
+		autoPreviewTimer = setTimeout( livePreviewReload, livePreviewInterval );
 	} );
 } );
