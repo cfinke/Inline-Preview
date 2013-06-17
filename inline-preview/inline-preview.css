@@ -9,7 +9,7 @@ body.inline-preview #wpwrap {
 	position: fixed;
 		right: 0;
 		top: 0;
-	text-align: center;	
+	text-align: center;
 }
 
 #inline-preview-container iframe {
@@ -34,16 +34,59 @@ body.inline-preview #wpwrap {
 	width: 40px;
 	height: 40px;
 	background-color: #000;
+	border-radius: 5px;
 	color: #fff;
 	cursor: pointer;
-	border-radius: 5px;
 	text-align: center;
 	font-size: 25px;
 	line-height: 45px;
 	opacity: 0.3;
 	z-index: 99999;
 }
+/*
+#inline-preview-container.loading #inline-preview-close {
+	-moz-animation-name: inline-preview-rotate; 
+	-moz-animation-duration: 2s; 
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: linear;
+	-webkit-animation-name: inline-preview-rotate; 
+	-webkit-animation-duration: 2s; 
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	animation-name: inline-preview-rotate; 
+	animation-duration: 2s; 
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
 
+@-moz-keyframes inline-preview-rotate {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+
+	to { 
+		-moz-transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes inline-preview-rotate {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+
+	to { 
+		-webkit-transform: rotate(360deg);
+	}
+}
+@keyframes inline-preview-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to { 
+		transform: rotate(360deg);
+	}
+}
+*/
 #inline-preview-close:hover {
 	opacity: 0.6;
 }
