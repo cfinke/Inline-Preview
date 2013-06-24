@@ -2,7 +2,7 @@
 Contributors: cfinke
 Tags: preview, live preview
 Requires at least: 3.4
-Tested up to: 3.6
+Tested up to: 3.6-beta4
 Stable tag: 3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,5 +25,15 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 
 == Changelog ==
 
-= 1.0 =
+= 3 =
+* Seamless reloading (and auto-reloading) of the preview frame.
+
+= 2 =
+* Added a close button to the preview frame.
+* Properly restoring one- or two-column view after the preview closes.
+
+= 1.1 =
+* Removed jquery.spin dependency.
+
+= 1 =
 * The initial release.
