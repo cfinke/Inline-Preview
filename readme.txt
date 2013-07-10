@@ -3,7 +3,7 @@ Contributors: cfinke
 Tags: preview, live preview
 Requires at least: 3.4
 Tested up to: 3.6-beta4
-Stable tag: 3
+Stable tag: 4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,10 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 1. An example of Inline Preview in action.
 
 == Changelog ==
+
+= 4 =
+* A better method for seamlessly reloading the preview frame.
+* Keep the preview iframe the same relative size when the window is resized.
 
 = 3 =
 * Seamless reloading (and auto-reloading) of the preview frame.
