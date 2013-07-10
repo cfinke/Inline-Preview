@@ -3,7 +3,8 @@ jQuery( function ( $ ) {
 		animationDuration : 500,
 		interval : 3000,
 		userIsActive : false,
-		timer : null,
+		reloadTimer : null,
+		resizeTimer : null,
 
 		editorContainer : $( '#wpwrap' ),
 		postBodyClass : null,
@@ -34,20 +35,10 @@ jQuery( function ( $ ) {
 			if ( $( '#inline-preview-container' ).length > 0 )
 				return;
 
-			var windowWidth = $( document ).width();
-
-			// Editor width in percent.
-			var editorWidth = 60;
-
-			if ( localStorage['inline-preview-width'] )
-				editorWidth = 100 - localStorage['inline-preview-width'];
-
-			var editorWidthPx = Math.round( windowWidth * ( editorWidth / 100 ) );
-			var previewWidthPx = Math.round( windowWidth * ( ( 100 - editorWidth ) / 100 ) );
-
 			$( 'body' ).addClass( 'inline-preview' );
 
-			var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview" id="inline-preview-iframe""></iframe></div>' ).css( 'width', previewWidthPx ).css( 'left', windowWidth );
+			var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview" id="inline-preview-iframe""></iframe></div>' ).hide();
+			self.editorContainer.before( previewContainer );
 
 			if ( $( '#post-body' ).hasClass( 'columns-2' ) ) {
 				self.postBodyClass = 'columns-2';
@@ -57,29 +48,9 @@ jQuery( function ( $ ) {
 				self.postBodyClass = 'columns-1';
 			}
 
-			self.editorContainer
-				.before( previewContainer )
-				.animate(
-					{ 'padding-right' : previewWidthPx },
-					{ duration : self.animationDuration, queue : false }
-				);
+			previewContainer.addClass( 'loading' );
 
-			previewContainer
-				.addClass( 'loading' )
-				.animate(
-					{ 'left' : editorWidthPx },
-					{ duration : self.animationDuration, queue : false, complete : function () {
-						previewContainer
-							.append(
-								$( '<a id="inline-preview-close">X</a>' )
-									.on( 'click.inline-preview', function ( e ) {
-										e.preventDefault();
-										self.remove();
-									} )
-							)
-							.css( 'z-index', '1000' );
-					} }
-				);
+			this.setContainerWidth( true );
 
 			previewContainer.resizable( {
 				minWidth : 100,
@@ -109,8 +80,71 @@ jQuery( function ( $ ) {
 			$( document ).on( 'keydown.inline-preview click.inline-preview', function () {
 				self.userIsActive = true;
 			} );
+			
+			$( window ).on( 'resize.inline-preview', function ( e ) {
+				if ( e.target == window ) {
+					clearTimeout( self.resizeTimeout );
+				
+					self.resizeTimeout = setTimeout( function () {
+						self.setContainerWidth();
+					}, 250 );
+				}
+			} );
 
-			self.timer = setTimeout( function () { self.reload(); }, self.interval );
+			self.reloadTimer = setTimeout( function () { self.reload(); }, self.interval );
+		},
+		
+		/**
+		 * Set the container width. Happens after a window resize or when the preview frame opens initially.
+		 *
+		 * @param bool animate Whether this is the initial opening of the preview frame.
+		 */
+		setContainerWidth : function ( animate ) {
+			var self = this;
+			
+			var previewContainer = $( '#inline-preview-container' );
+			
+			var windowWidth = $( document ).width();
+
+			if ( animate )
+				previewContainer.css( 'left', windowWidth ).show();
+
+			// Editor width in percent.
+			var editorWidth = 60;
+
+			if ( localStorage['inline-preview-width'] )
+				editorWidth = 100 - localStorage['inline-preview-width'];
+
+			var editorWidthPx = Math.round( windowWidth * ( editorWidth / 100 ) );
+			var previewWidthPx = Math.round( windowWidth * ( ( 100 - editorWidth ) / 100 ) );
+			
+			previewContainer.css( 'width', previewWidthPx );
+			
+			if ( animate ) {
+				this.editorContainer.animate(
+					{ 'padding-right' : previewWidthPx },
+					{ duration : self.animationDuration, queue : false }
+				);
+				
+				previewContainer.animate(
+					{ 'left' : editorWidthPx },
+					{ duration : self.animationDuration, queue : false, complete : function () {
+						previewContainer
+							.append(
+								$( '<a id="inline-preview-close">X</a>' )
+									.on( 'click.inline-preview', function ( e ) {
+										e.preventDefault();
+										self.remove();
+									} )
+							)
+							.css( 'z-index', '1000' );
+					} }
+				);
+			}
+			else {
+				this.editorContainer.css( 'padding-right', previewWidthPx );
+				previewContainer.css( 'left', editorWidthPx );
+			}
 		},
 		
 		/**
@@ -119,8 +153,8 @@ jQuery( function ( $ ) {
 		setTimer : function () {
 			var self = this;
 			
-			clearTimeout( this.timer );
-			this.timer = setTimeout( function () { self.reload(); }, this.interval );
+			clearTimeout( this.reloadTimer );
+			this.reloadTimer = setTimeout( function () { self.reload(); }, this.interval );
 		},
 
 		/**
@@ -173,6 +207,7 @@ jQuery( function ( $ ) {
 			var self = this;
 
 			$( document ).off( '.inline-preview' );
+			$( window ).off( '.inline-preview' );
 
 			$( '#inline-preview-close' ).hide();
 
@@ -193,7 +228,8 @@ jQuery( function ( $ ) {
 				{ duration : self.animationDuration, queue : false }
 			);
 
-			clearTimeout( this.timer );
+			clearTimeout( this.reloadTimer );
+			clearTimeout( this.resizeTimer );
 		},
 	};
 
