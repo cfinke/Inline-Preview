@@ -138,25 +138,30 @@ jQuery( function ( $ ) {
 
 			this.userIsActive = false;
 
-			var hiddenFrame = $( '#inline-preview-hidden-iframe' );
+			var loadingFrame = $( '#inline-preview-hidden-iframe' );
 
 			$( '#post-preview' ).click();
 
-			hiddenFrame.on( 'load.inline-preview', function () {
+			loadingFrame.on( 'load.inline-preview', function () {
 				$( this ).off( 'load.inline-preview' );
 
-				var visibleFrame = $( '#inline-preview-iframe' );
-				var visibleFrameWindow = $( visibleFrame.get(0).contentWindow );
-				var iframeScrollLocation = visibleFrameWindow.scrollTop();
+				// When it loads, scroll to the same position as the visible frame.
+				var oldPreviewFrame = $( '#inline-preview-iframe' );
+				var iframeScrollLocation = $( oldPreviewFrame.get(0).contentWindow ).scrollTop();
+				
+				loadingFrame.show();
 
-				try {
-					visibleFrame.contents().find( 'body' ).html( hiddenFrame.contents().find( 'body' ).html() );
-				} catch ( e ) {
-					// Not 100% sure why this errors, but probably due to JS re-execution when the body contents change.
-					// console.log(e);
-				}
+				$( loadingFrame.get(0).contentWindow ).scrollTop( iframeScrollLocation );
 
-				visibleFrameWindow.scrollTop( iframeScrollLocation );
+				// Remove the once-visible frame.
+				oldPreviewFrame.remove();
+				
+				// Give it the wp-preview name.
+				loadingFrame.attr( 'name', '' ).attr( 'id', 'inline-preview-iframe' );
+				
+				// Create a hidden frame with name="wp-preview".
+				$( '#inline-preview-container' ).append( $( '<iframe name="wp-preview" id="inline-preview-hidden-iframe"></iframe>' ) );
+				
 				self.setTimer();
 			} );
 		},
