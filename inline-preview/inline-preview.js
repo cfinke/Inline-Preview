@@ -26,7 +26,7 @@ jQuery( function ( $ ) {
 		},
 		
 		/**
-		 * The user has intiated a preview.
+		 * The user has initiated a preview.
 		 */
 		preview : function () {
 			var self = this;
