@@ -131,11 +131,12 @@ jQuery( function ( $ ) {
 					{ duration : self.animationDuration, queue : false, complete : function () {
 						previewContainer
 							.append(
-								$( '<a id="inline-preview-close">X</a>' )
+								$( '<a id="inline-preview-close"  class="media-modal-close"><span class="media-modal-icon"></span></a>' )
 									.on( 'click.inline-preview', function ( e ) {
 										e.preventDefault();
 										self.remove();
 									} )
+									.attr( 'title', Inline_Preview_Strings.close )
 							)
 							.css( 'z-index', '1000' );
 					} }
