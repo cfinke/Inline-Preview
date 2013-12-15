@@ -3,6 +3,10 @@ body.inline-preview #wpwrap {
 	padding-right: 0;
 }
 
+body.inline-preview #poststuff, body.inline-preview #post-body-content {
+	min-width: 0px !important;
+}
+
 #inline-preview-container {
 	height: 100%;
 	width: 0;
