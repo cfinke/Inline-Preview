@@ -1,9 +1,9 @@
 === Inline Preview ===
 Contributors: cfinke
 Tags: preview, live preview
-Requires at least: 3.4
-Tested up to: 3.6-beta4
-Stable tag: 4
+Requires at least: 3.6
+Tested up to: 3.8
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,11 +11,11 @@ Inline Preview adds a preview of the post you're writing next to the editor when
 
 == Description ==
 
+Inline Preview is a plugin for WordPress that adds a live preview of the current post next to the post editor instead of opening the preview in a new tab.
+
 *Problem:* When creating a post in WordPress, previewing your post in a separate tab can be slow and/or complicated.
 
 *Solution:* Show the preview right next to the editor.
-
-Inline Preview is a plugin for WordPress that adds a zoomed out preview of the current post next to the post editor when the user clicks Preview instead of opening in a new tab.
 
 It's just an idea I'm playing with for streamlining the post creation process, and if it feels familiar, it's probably because it is: through version 2.1, WordPress contained a preview iframe at the bottom of the post editing screen, but this is a more elegant implementation.
 
@@ -24,6 +24,10 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 1. An example of Inline Preview in action.
 
 == Changelog ==
+
+= 4.1 =
+* Better compatibility with WordPress 3.8
+* The close button now fits in better with the rest of the WordPress UI.
 
 = 4 =
 * A better method for seamlessly reloading the preview frame.
