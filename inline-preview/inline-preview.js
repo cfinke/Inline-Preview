@@ -37,7 +37,15 @@ jQuery( function ( $ ) {
 
 			$( 'body' ).addClass( 'inline-preview' );
 
-			var previewContainer = $( '<div id="inline-preview-container"><iframe name="wp-preview" id="inline-preview-iframe""></iframe></div>' ).hide();
+			var previewContainer = $( '<div/>' )
+				.attr( 'id', 'inline-preview-container' )
+				.hide()
+				.append(
+					$( '<iframe/>' )
+						.attr( 'id', 'inline-preview-iframe' )
+						.attr( 'name', $( '#post-preview' ).attr( 'target' ) || 'wp-preview' )
+				);
+
 			self.editorContainer.before( previewContainer );
 
 			if ( $( '#post-body' ).hasClass( 'columns-2' ) ) {
@@ -72,8 +80,9 @@ jQuery( function ( $ ) {
 			$( '#inline-preview-iframe' ).on( 'load.inline-preview', function () {
 				self.userIsActive = false;
 				previewContainer.removeClass( 'loading' );
+				var previewIframeName = $( this ).attr( 'name' );
 				$( this ).unbind( 'load.inline-preview' ).removeAttr( 'name' );
-				$( '#inline-preview-container' ).append( $( '<iframe name="wp-preview" id="inline-preview-hidden-iframe"></iframe>' ) );
+				$( '#inline-preview-container' ).append( $( '<iframe id="inline-preview-hidden-iframe"></iframe>' ).attr( 'name', previewIframeName ) );
 			} );
 
 			// Don't continually refresh the iframe if nothing is happening.
@@ -191,11 +200,11 @@ jQuery( function ( $ ) {
 				// Remove the once-visible frame.
 				oldPreviewFrame.remove();
 				
-				// Give it the wp-preview name.
+				var previewIframeName = loadingFrame.attr( 'name' );
 				loadingFrame.attr( 'name', '' ).attr( 'id', 'inline-preview-iframe' );
 				
-				// Create a hidden frame with name="wp-preview".
-				$( '#inline-preview-container' ).append( $( '<iframe name="wp-preview" id="inline-preview-hidden-iframe"></iframe>' ) );
+				// Give it the right name so that link targets work.
+				$( '#inline-preview-container' ).append( $( '<iframe id="inline-preview-hidden-iframe"></iframe>' ).attr( 'name', previewIframeName ) );
 				
 				self.setTimer();
 			} );
