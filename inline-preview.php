@@ -12,7 +12,7 @@ function inline_preview_enqueue( $hook ) {
 	if ( 'post-new.php' != $hook && 'post.php' != $hook )
 		return;
 
-	wp_enqueue_script( 'inline-preview', plugins_url( 'inline-preview/inline-preview.js', __FILE__ ), 'jquery', '4.1' );
+	wp_enqueue_script( 'inline-preview', plugins_url( 'inline-preview/inline-preview.js', __FILE__ ), array( 'jquery', 'jquery-ui-resizable' ), '4.1' );
 	wp_enqueue_style( 'inline-preview', plugins_url( 'inline-preview/inline-preview.css', __FILE__ ), array(), '4.1' );
 	wp_localize_script( 'inline-preview', 'Inline_Preview_Strings', array( 'close' => __( 'Close', 'inline-preview' ) ) );
 }
