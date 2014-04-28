@@ -1,9 +1,9 @@
 === Inline Preview ===
 Contributors: cfinke
 Tags: preview, live preview
-Requires at least: 3.6
-Tested up to: 3.8
-Stable tag: 4.1
+Requires at least: 3.7
+Tested up to: 3.9
+Stable tag: 4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,9 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 1. An example of Inline Preview in action.
 
 == Changelog ==
+
+= 4.2 =
+* Better compatibility with WordPress 3.9
 
 = 4.1 =
 * Better compatibility with WordPress 3.8
