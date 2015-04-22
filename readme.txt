@@ -3,7 +3,7 @@ Contributors: cfinke
 Tags: preview, live preview
 Requires at least: 4.1
 Tested up to: 4.1.2
-Stable tag: 4.2
+Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,8 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 
 = 4.3 =
 * Better compatibility with WordPress 4.1
+* Fixed a bug preventing the preview frame from being resizable.
+* Fixed a bug preventing live preview from working sometimes.
 
 = 4.2 =
 * Better compatibility with WordPress 3.9
