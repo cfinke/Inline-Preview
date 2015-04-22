@@ -5,6 +5,7 @@ jQuery( function ( $ ) {
 		userIsActive : false,
 		reloadTimer : null,
 		resizeTimer : null,
+		autoClicking : false,
 
 		editorContainer : $( '#wpwrap' ),
 		postBodyClass : null,
@@ -87,7 +88,9 @@ jQuery( function ( $ ) {
 
 			// Don't continually refresh the iframe if nothing is happening.
 			$( document ).on( 'keydown.inline-preview click.inline-preview', function () {
-				self.userIsActive = true;
+				if ( ! self.autoClicking ) {
+					self.userIsActive = true;
+				}
 			} );
 			
 			$( window ).on( 'resize.inline-preview', function ( e ) {
@@ -187,7 +190,9 @@ jQuery( function ( $ ) {
 
 			var loadingFrame = $( '#inline-preview-hidden-iframe' );
 
+			this.autoClicking = true;
 			$( '#post-preview' ).click();
+			this.autoClicking = false;
 
 			loadingFrame.on( 'load.inline-preview', function () {
 				$( this ).off( 'load.inline-preview' );
@@ -211,6 +216,9 @@ jQuery( function ( $ ) {
 				
 				self.setTimer();
 			} );
+
+			// Set a 15-second backup in case the preview frame fails to load for some reason.
+			setTimeout( function() { self.setTimer(); }, 15000 );
 		},
 
 		/**
