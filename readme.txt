@@ -25,6 +25,9 @@ It's just an idea I'm playing with for streamlining the post creation process, a
 
 == Changelog ==
 
+= 4.3 =
+* Better compatibility with WordPress 4.1
+
 = 4.2 =
 * Better compatibility with WordPress 3.9
 

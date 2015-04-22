@@ -148,6 +148,9 @@ jQuery( function ( $ ) {
 									.attr( 'title', Inline_Preview_Strings.close )
 							)
 							.css( 'z-index', '1000' );
+
+						// The editor toolbar only resizes on page scroll.
+						$(window).scroll();
 					} }
 				);
 			}
@@ -230,6 +233,9 @@ jQuery( function ( $ ) {
 
 						$( '#inline-preview-container' ).remove();
 						$( 'body' ).removeClass( 'inline-preview' );
+
+						// The editor toolbar only resizes on page scroll.
+						$(window).scroll();
 					} }
 				);
 
